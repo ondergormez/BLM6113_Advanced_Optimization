@@ -19,3 +19,10 @@ Regarding the weeks;
 - [ ] [12. Week - 10 May 2024 Friday](12_10_05_2024.ipynb)
 - [ ] [13. Week - 17 May 2024 Friday](13_17_05_2024.ipynb)
 - [ ] [14. Week - 24 May 2024 Friday](14_24_05_2024.ipynb)
+
+## Online Lessons
+- [x] [1. Week - 3.03.2023](https://arsivonline.yildiz.edu.tr/Recordings/2022-2023/BAHAR%20D%C3%96NEM%C4%B0/BLM6113%20-%201/BLM6113%20-%201_3-03-2023_09-00_3-03-2023_11-50_.MP4)
+- [x] [2. Week - 10.03.2023](https://arsivonline.yildiz.edu.tr/Recordings/2022-2023/BAHAR%20D%C3%96NEM%C4%B0/BLM6113%20-%201/BLM6113%20-%201_10-03-2023_09-00_10-03-2023_11-50_.MP4)
+- [x] [3. Week - 17.03.2023](https://arsivonline.yildiz.edu.tr/Recordings/2022-2023/BAHAR%20D%C3%96NEM%C4%B0/BLM6113%20-%201/BLM6113%20-%201_17-03-2023_09-00_17-03-2023_11-50_.MP4)
+- [x] [4. Week - 24.03.2023](https://arsivonline.yildiz.edu.tr/Recordings/2022-2023/BAHAR%20D%C3%96NEM%C4%B0/BLM6113%20-%201/BLM6113%20-%201_24-03-2023_09-00_24-03-2023_11-50_.MP4)
+- [ ] [5. Week - 31.03.2023](https://arsivonline.yildiz.edu.tr/Recordings/2022-2023/BAHAR%20D%C3%96NEM%C4%B0/BLM6113%20-%201/BLM6113%20-%201_31-03-2023_09-00_31-03-2023_11-50_.MP4)
