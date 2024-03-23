@@ -5,7 +5,7 @@ Regarding the weeks;
 - [x] : It means reviewed.
 
 ## Weeks
-- [ ] [1. Week - 23 February 2024 Friday](01_23_02_2024.ipynb)
+- [x] [1. Week - 23 February 2024 Friday](01_23_02_2024.ipynb)
 - [ ] [2. Week - 1 March 2024 Friday](02_01_03_2024.ipynb)
 - [ ] [3. Week - 8 March 2024 Friday](03_08_03_2024.ipynb)
 - [ ] [4. Week - 15 March 2024 Friday](04_15_03_2024.ipynb)
