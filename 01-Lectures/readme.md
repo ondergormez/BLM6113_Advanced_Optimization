@@ -17,5 +17,5 @@ Regarding the weeks;
 - [x] [10. Week - 26 April 2024 Friday](10_26_04_2024.ipynb)
 - [x] [11. Week - 3 May 2024 Friday](11_03_05_2024.ipynb)
 - [x] [12. Week - 10 May 2024 Friday](12_10_05_2024.ipynb)
-- [ ] [13. Week - 17 May 2024 Friday](13_17_05_2024.ipynb)
+- [x] [13. Week - 17 May 2024 Friday](13_17_05_2024.ipynb)
 - [ ] [14. Week - 24 May 2024 Friday](14_24_05_2024.ipynb)
