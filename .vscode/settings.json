@@ -1,0 +1,16 @@
+{
+    "editor.formatOnSave": true,
+    "editor.formatOnSaveMode": "modificationsIfAvailable",
+    "notebook.formatOnSave.enabled": true,
+    "files.insertFinalNewline": true,
+    "files.trimFinalNewlines": true,
+    "editor.tabSize": 4,
+    "editor.indentSize": 4,
+    "editor.rulers": [
+        120
+    ],
+    "editor.detectIndentation": false,
+    "autopep8.args": [
+        "--max-line-length=120"
+    ]
+}
