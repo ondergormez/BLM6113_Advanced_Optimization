@@ -1,11 +1,14 @@
 import matplotlib.pyplot as plt
 import pickle as pkl
 import numpy as np
+import os
 
 from matplotlib import rcParams
 rcParams.update({'font.size': 18, 'text.usetex': True})
 
-logreg_GD_weights, logreg_GD_objective = pkl.load(open('./results/logreg_GD.pkl', 'rb'))
+file_path = os.path.dirname(__file__)
+
+logreg_GD_weights, logreg_GD_objective = pkl.load(open(file_path + '/results/logreg_GD.pkl', 'rb'))
 
 def plot_logreg():
     '''
@@ -24,7 +27,7 @@ def plot_logreg():
 
     plt.yscale('log')
     plt.tight_layout()
-    plt.savefig('./results/logreg_weights.png', dpi=1200)
+    plt.savefig(file_path + '/results/logreg_weights.png', dpi=1200)
     plt.show()
     plt.pause(5)
 
@@ -44,13 +47,9 @@ def plot_logreg():
 
     plt.yscale('log')
     plt.tight_layout()
-    plt.savefig('./results/logreg_objective.png', dpi=1200)
+    plt.savefig(file_path + '/results/logreg_objective.png', dpi=1200)
     plt.show()
 
 if __name__ == '__main__':
 
     plot_logreg()
-    
-    
-
-    

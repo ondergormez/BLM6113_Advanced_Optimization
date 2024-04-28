@@ -3,6 +3,7 @@ import cvxpy as cp
 epsilon = 1e-5
 
 class LogisticRegression():
+
     def __init__(self, args, X_train, Y_train,X_test):
         self.X_train = X_train
         self.Y_train = Y_train
@@ -30,6 +31,7 @@ class LogisticRegression():
     def getTest(self):
         self.test = self.sigmoid(self.X_test @ self.weights)
         return self.test
+
     def objective(self, weights):
         '''
         return the objective value of the problem
