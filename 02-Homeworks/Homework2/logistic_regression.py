@@ -1,6 +1,8 @@
+from numpy.linalg import inv
 import numpy as np
 import cvxpy as cp
 epsilon = 1e-5
+
 
 class LogisticRegression():
 
@@ -70,6 +72,50 @@ class LogisticRegression():
         if self.optimizer == 'GD':
             update_direction = gradient
             self.weights -= self.lr * update_direction
+        elif self.optimizer == 'MN':
+            hessian = self.Hessian(self.weights)
+            inverse_hessian = inv(hessian)
+
+            S = -1 * np.dot(inverse_hessian, gradient)
+            self.weights = self.weights + self.lr * S
+        elif self.optimizer == 'CG':
+            update_direction = -1 * gradient
+            updated_weights = self.weights + self.lr * update_direction
+
+            gradient_2 = self.gradient(updated_weights)
+            S2 = -1 * gradient_2 + (np.linalg.norm(gradient_2, ord=2) /
+                                    np.linalg.norm(gradient, ord=2)) * update_direction
+            self.weights = updated_weights + self.lr * S2
+        elif self.optimizer == 'LM':
+            hessian = self.Hessian(self.weights)
+            I = np.identity(self.weights.shape[0])
+
+            S = -1 * np.dot(inv(hessian + self.lr * I), gradient)
+            self.weights = self.weights + self.lr * S
+        elif self.optimizer == 'BFGS':
+            hessian = self.Hessian(self.weights)
+            inverse_hessian = inv(hessian)
+
+            S1 = -1 * np.dot(inverse_hessian, gradient)
+            w2 = self.weights + self.lr * S1
+
+            g2 = self.gradient(w2)
+            delta_w = w2 - self.weights
+            delta_g = g2 - gradient
+
+            I = np.identity(self.weights.shape[0])
+            delta_w = delta_w.reshape(len(delta_w), 1)
+            delta_g = delta_g.reshape(len(delta_w), 1)
+
+            R = 1 / delta_w.T.dot(delta_g)
+            num = inverse_hessian.dot(delta_g)
+            v1 = 1 + R * num.T.dot(delta_g)
+            v2 = R * np.outer(delta_w, delta_w)
+            v3 = R * np.outer(delta_w, num)
+            v4 = R * np.outer(num, delta_w)
+            G2 = v1 * v2 - v3 - v4
+
+            self.weights = w2
         else:
             raise NotImplementedError
 
