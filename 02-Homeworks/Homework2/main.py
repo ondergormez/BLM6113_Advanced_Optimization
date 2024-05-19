@@ -1,14 +1,23 @@
-import sys
-sys.path.append('./datasets')
 import os
 import numpy as np
 import pickle as pkl
 from datasets.data_preprocess import data_preprocess
 import logistic_regression
 from options import args_parser
+import yaml
+import logging.config
+import logging
+import sys
 
+sys.path.append('./datasets')
 
 current_work_dir = os.path.dirname(__file__)
+
+with open(current_work_dir + '/logger_config.yaml', 'r') as file:
+    config = yaml.safe_load(file.read())
+    logging.config.dictConfig(config)
+
+logger = logging.getLogger(__name__)
 
 if __name__ == '__main__':
 
@@ -16,21 +25,21 @@ if __name__ == '__main__':
 
     (x_train, y_train), (x_test, y_test) = data_preprocess(args)
 
-    print('learning rate: ', args.lr)
-    print('Optimizer: ', args.optimizer)
+    logger.info('learning rate: {0}'.format(args.lr))
+    logger.info('Optimizer: {0}'.format(args.optimizer))
 
     Model = logistic_regression.LogisticRegression(args=args, X_train=x_train, Y_train=y_train,X_test=x_test)
 
     weight_diff_list = []
     obj_diff_list = []
     weight_diff, obj_diff = Model.diff_cal(Model.weights)
-    print("\n------------ Initial ------------")
-    print("weight error: {:.4e}".format(weight_diff))
-    print("objective error: {:.4e}".format(obj_diff))
+    logger.info("------------ Initial ------------")
+    logger.info("weight error: {:.4e}".format(weight_diff))
+    logger.info("objective error: {:.4e}".format(obj_diff))
 
     Eigvals = np.linalg.eigvals(Model.pre_Hessian)
-    print("\nmax eigenvalue of Hessian:{:.4f}".format(np.max(Eigvals)))
-    print("min eigenvalue of Hessian:{:.4f}".format(np.min(Eigvals)))
+    logger.info("max eigenvalue of Hessian:{:.4f}".format(np.max(Eigvals)))
+    logger.info("min eigenvalue of Hessian:{:.4f}".format(np.min(Eigvals)))
 
     '''
     update
@@ -38,13 +47,24 @@ if __name__ == '__main__':
     for i in range(args.iteration):
 
         weight_diff, obj_diff = Model.update()
-        print("\n------------ Iteration {} ------------".format(i+1))
-        print("weight error: {:.4e}".format(weight_diff))
-        print("objective error: {:.4e}".format(obj_diff))
+
+        if i % 50 == 0 or i == args.iteration - 1:
+            logger.info("------------ Iteration {} ------------".format(i+1))
+            logger.info("weight error: {:.4e}".format(weight_diff))
+            logger.info("objective error: {:.4e}".format(obj_diff))
+        else:
+            logger.debug("------------ Iteration {} ------------".format(i+1))
+            logger.debug("weight error: {:.4e}".format(weight_diff))
+            logger.debug("objective error: {:.4e}".format(obj_diff))
+
         weight_diff_list.append(weight_diff)
         obj_diff_list.append(obj_diff)
 
         if weight_diff / np.sqrt(Model.dimension) <= 1e-5:
+            # print last iteration result
+            logger.info("------------ Iteration {} ------------".format(i+1))
+            logger.info("weight error: {:.4e}".format(weight_diff))
+            logger.info("objective error: {:.4e}".format(obj_diff))
             break
 
     file_name = './results/{}_{}.pkl'.format('logreg', args.optimizer)
@@ -59,7 +79,7 @@ if __name__ == '__main__':
             correct += 1
 
     percent_correct = correct / len(val2) * 100
-    print(percent_correct, 'Accuracy: %')
+    logger.warn('Accuracy: {0:.3f}%'.format(percent_correct))
 
 
     with open(file_name, 'wb') as f:
