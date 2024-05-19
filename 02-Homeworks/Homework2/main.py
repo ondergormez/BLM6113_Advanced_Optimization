@@ -19,9 +19,8 @@ with open(current_work_dir + '/logger_config.yaml', 'r') as file:
 
 logger = logging.getLogger(__name__)
 
-if __name__ == '__main__':
 
-    args = args_parser()
+def main(args):
 
     (x_train, y_train), (x_test, y_test) = data_preprocess(args)
 
@@ -84,3 +83,10 @@ if __name__ == '__main__':
 
     with open(file_name, 'wb') as f:
         pkl.dump([weight_diff_list, obj_diff_list], f)
+
+
+if __name__ == '__main__':
+    # Running from the command line
+    args = args_parser()
+
+    main(args)
