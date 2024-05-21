@@ -66,7 +66,10 @@ def main(args):
             logger.info("objective error: {:.4e}".format(obj_diff))
             break
 
-    file_name = './results/{}_{}.pkl'.format('logreg', args.optimizer)
+    if args.is_armijo_stepsize_active:
+        file_name = './results/{}_{}_armijo.pkl'.format('logreg', args.optimizer)
+    else:
+        file_name = './results/{}_{}.pkl'.format('logreg', args.optimizer)
     file_name = os.path.join(current_work_dir, file_name)
 
     val = Model.getTest() > 0.5
@@ -78,7 +81,7 @@ def main(args):
             correct += 1
 
     percent_correct = correct / len(val2) * 100
-    logger.warn('Accuracy: {0:.3f}%'.format(percent_correct))
+    logger.warning('Accuracy: {0:.3f}%'.format(percent_correct))
 
 
     with open(file_name, 'wb') as f:

@@ -15,6 +15,7 @@ class LogisticRegression():
         self.dimension = self.X_train.shape[1]
 
         self.weights = np.zeros_like(X_train[0])
+        self.is_armijo_stepsize_active = args.is_armijo_stepsize_active
         self.lr = args.lr
         self.optimizer = args.optimizer
 
@@ -70,15 +71,24 @@ class LogisticRegression():
         gradient = self.gradient(self.weights)
 
         if self.optimizer == 'GD':
+            if self.is_armijo_stepsize_active:
+                self.lr = self.armijoStepLengthController(gradient)
+
             update_direction = gradient
             self.weights -= self.lr * update_direction
         elif self.optimizer == 'MN':
+            if self.is_armijo_stepsize_active:
+                self.lr = self.armijoStepLengthController(gradient)
+
             hessian = self.Hessian(self.weights)
             inverse_hessian = inv(hessian)
 
             S = -1 * np.dot(inverse_hessian, gradient)
             self.weights = self.weights + self.lr * S
         elif self.optimizer == 'CG':
+            if self.is_armijo_stepsize_active:
+                self.lr = self.armijoStepLengthController(gradient)
+
             update_direction = -1 * gradient
             updated_weights = self.weights + self.lr * update_direction
 
@@ -122,6 +132,39 @@ class LogisticRegression():
         a, b = self.diff_cal(self.weights)
         return a,b
 
+    # Modified from: https://github.com/saurabbhsp/machineLearning/blob/master/LinearRegression-GradientDescent/GradientDescent.py#L127x
+    def armijoStepLengthController(self, gradient):
+
+        np.random.seed(8)
+        beta = np.random.random_sample(785)
+        delta = 0.2
+
+        x = self.X_train
+        x = x * 1.0
+
+        y = self.Y_train
+        y = y * 1.0
+
+        y_prediction = np.dot(beta, x.T)
+        residual = y_prediction - y
+        fx = np.dot(residual.T, residual)
+
+        maxIterations = 50
+        alpha = 1.0
+        gradientSquare = np.dot(gradient, gradient)
+
+        for i in range(0, maxIterations):
+
+            alpha = alpha/2
+
+            residual_alpha_gradient = y - np.dot((beta - (alpha * gradient)), x .T)
+            fx_alpha_gradient = np.dot(residual_alpha_gradient.T, residual_alpha_gradient)
+
+            """Convergence condition for armijo principle"""
+            if fx_alpha_gradient < fx - (alpha * delta * gradientSquare):
+                break
+
+        return alpha
 
 
     def CVXsolve(self):

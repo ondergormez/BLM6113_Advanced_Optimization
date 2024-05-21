@@ -15,8 +15,12 @@ def plot_logreg(args):
     logistic regression: weights
     '''
 
-    logreg_optimizer_weights, logreg_optimizer_objective = pkl.load(
-        open(file_path + '/results/logreg_' + args.optimizer + '.pkl', 'rb'))
+    if args.is_armijo_stepsize_active:
+        logreg_optimizer_weights, logreg_optimizer_objective = pkl.load(
+            open(file_path + '/results/logreg_' + args.optimizer + '_armijo.pkl', 'rb'))
+    else:
+        logreg_optimizer_weights, logreg_optimizer_objective = pkl.load(
+            open(file_path + '/results/logreg_' + args.optimizer + '.pkl', 'rb'))
 
     logreg_dimension = 785
     plt.figure()
@@ -31,7 +35,12 @@ def plot_logreg(args):
 
     plt.yscale('log')
     plt.tight_layout()
-    plt.savefig(file_path + '/results/logreg_' + args.optimizer + '_weights.png', dpi=1200)
+
+    if args.is_armijo_stepsize_active:
+        plt.savefig(file_path + '/results/logreg_' + args.optimizer + '_armijo_weights.png', dpi=1200)
+    else:
+        plt.savefig(file_path + '/results/logreg_' + args.optimizer + '_weights.png', dpi=1200)
+
     plt.show()
     plt.pause(5)
 
@@ -51,7 +60,12 @@ def plot_logreg(args):
 
     plt.yscale('log')
     plt.tight_layout()
-    plt.savefig(file_path + '/results/logreg_' + args.optimizer + '_objective.png', dpi=1200)
+
+    if args.is_armijo_stepsize_active:
+        plt.savefig(file_path + '/results/logreg_' + args.optimizer + '_armijo_objective.png', dpi=1200)
+    else:
+        plt.savefig(file_path + '/results/logreg_' + args.optimizer + '_objective.png', dpi=1200)
+
     plt.show()
 
 
