@@ -2,8 +2,9 @@
 
 ## Contents
 
-- [ ] [Lectures](01-Lectures/readme.md)
-- [ ] [Homeworks](02-Homeworks/readme.md)
+- [x] [Lectures](01-Lectures/readme.md)
+- [x] [Homeworks](02-Homeworks/readme.md)
+- [x] [PhD Qualifying Exam - Doktora Yeterlilik Sınavı](03-PhDQualifyingExam/readme.md)
 
 ## Acknowlegments
 
